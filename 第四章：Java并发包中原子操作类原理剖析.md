@@ -160,9 +160,9 @@ count 0:7
 <h2 id='4'>JDK8新增的原子操作类LongAdder</h2>
 JDK8新增了一个原子性递增或者递减类LongAdder用来客服在高并发下使用AtomicLong的缺点。既然AtomicLong的性能瓶颈是由于过多线程去竞争一个变量的更新而产生的，那么如果把一个变量分解为多个变量，让同样多的线程去竞争多个资源，是不是就解决了性能问题！是的哦！！LongAdder就是这样的思路。
 
-![image-20191104220900565](/Users/hzx/Library/Application Support/typora-user-images/image-20191104220900565.png)
+![image-20191104220900565](image/4-1.jpg)
 如图4-1所示，使用AtomicLong时是多个线程同时竞争同一个源自变量
-![image-20191104221051106](/Users/hzx/Library/Application Support/typora-user-images/image-20191104221051106.png)
+![image-20191104221051106](image/4-2.jpg)
 如图4-2所示，使用LongAdder时，则是在内部维护多个Cell变量，每个Cell里面有一个初始值为0的long型变量，这样，在同等并发量的情况下，争夺单个变量更新操作的线程量会减少，这变相地减少了争夺共享资源的并发量。另外，多个线程在争夺同一个Cell原子变量时如果失败了，它并不是在当前Cell遍历廊上一直自旋CAS重试，而是尝试在其他Cell的变量上进行CAS尝试，这个改变增加了当前线程重试CAS成功的可能性。最后，在获取LongAdder当前值时，是把所有Cell变量的value值累加后再加上base返回的。
 
 LongAdder维护了一个延迟初始化的原子性更新数组（默认情况下Cell数组是null）和一个基值变量base。由于Cells占用的内存是相对比较大的，所以一开始并不创建它，而是在需要时创建，也就是惰性加载。
