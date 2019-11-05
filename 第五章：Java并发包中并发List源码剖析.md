@@ -16,7 +16,7 @@
 
 并发包中的并发List只有CopyOnwriteArrayList。CopyOnWriteArrayList是一个线程安全的ArrayList，对其进行修改操作都是在底层的的一个复制的数组上进行的，也就是使用了写时复制的策略。
 
-![](iamge/5-1.png)
+![](image/5-1.png)
 
 在CopyOnWriteArrayList的类图中，每个CopyOnWriteArrayList对象里面有一个array数组对象用来存放具体元素，ReentrantLock独占锁对象用来保证同时只有一个线程对array进行修改。这里只要记得ReentrantLock是独占锁，同时只有一个线程可以获取就可以了，后面会专门对JUC的锁进行介绍。
 
