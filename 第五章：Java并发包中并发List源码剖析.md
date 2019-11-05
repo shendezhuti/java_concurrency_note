@@ -265,5 +265,5 @@ public class copylist {
 
 <h2 id='9'>总结</h2>
 
-CopyOnWriteArrayList使用写时复制的策略来保证 list的一致性，而获取一修改一写入三步操作并不是原子性的，所以在增删改的过程中都使用了独占锁，来保证在某个时间只有一个线程能对 list数组进行修改。 另外 CopyOnWriteAn·ayList提供了弱一致性的法代器 ， 从而保证在获取迭代器后，其他线程对 list 的修改是不可见的， 迭代器遍历的数组是一个快照 。 另外， CopyOnWriteArraySet 的底层就是使用它实现的，感兴趣的读者可以查阅相关源码 。
+CopyOnWriteArrayList使用写时复制的策略来保证 list的一致性，而获取一修改一写入三步操作并不是原子性的，所以在增删改的过程中都使用了独占锁，来保证在某个时间只有一个线程能对list数组进行修改。 另外 CopyOnWriteAn·ayList提供了弱一致性的迭代器，从而保证在获取迭代器后，其他线程对 list 的修改是不可见的，迭代器遍历的数组是一个快照。 另外，CopyOnWriteArraySet的底层就是使用它实现的，感兴趣的读者可以查阅相关源码 。
 
