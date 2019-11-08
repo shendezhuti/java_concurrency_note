@@ -101,7 +101,7 @@ public class ParkAndUnparkTest {
 
 AbstractQueuedSynchronizer 抽象同步队列简称 AQS，它是实现同步器的基础组件，并发包中锁的底层就是使用 AQS 实现的。AQS的类图如图6-1所示
 
-<img src="/Users/hzx/Library/Application Support/typora-user-images/6-1.png" alt="image-20191105192116256" style="zoom: 50%;" />
+<img src="/image/6-1.png" alt="image-20191105192116256" style="zoom:33%;" />
 
 AQS是一个FIFO的双向队列，其内部通过节点head和tail记录队尾和队首元素，队列元素类型是Node。
 
@@ -218,7 +218,7 @@ private node enq(final Node node){
 
 到现在为止只插入了 一 个哨兵节点，还需要插入 node 节点，所以在第二次循环后执 行到代码 (1 )，这时候队列状态如图 6-2 (III)所示 ; 然后执行代码 (3)设置 node 的 前驱节点为尾部节点，这时候队列状态如图 6-2 中 (IV)所示:然后通过 CAS 算法设置 node节点为尾部节点， CAS成功后队列状态如图6-2中 CV)所示:CAS成功后再设置原 来的尾部节点的后驱节点为 node 这时候就完成了双向链表的插入，此时队列状态如图 6-2 中(VI) 所示。 
 
-<img src="/Users/hzx/Library/Application Support/typora-user-images/6-2.png" alt="image-20191107003654500" style="zoom:50%;" />
+<img src="image/6-2.png" alt="image-20191107003654500" style="zoom:33%;" />
 
 <h3 id='7'>
   AQS-条件变量的支持
@@ -331,7 +331,7 @@ private Node addConditionWaiter(){
 
 最后使用一个图(见图 6-3)总结如下: 一个锁对应一个 AQS 阻塞队列，对应多个条 件变量， 每个条件变量有自己的一个条件队列。 
 
-<img src="/Users/hzx/Library/Application Support/typora-user-images/6-3.png" alt="image-20191107122554752" style="zoom:50%;" />
+<img src="/image/6-3.png" alt="image-20191107122554752" style="zoom:50%;" />
 
 <h3 id='8'>基于AQS实现自定义同步器</h3>
 
@@ -498,7 +498,7 @@ public static void main(String[] args) {
 
 ReentrantLock是可重入的独占锁，同时只能有一个线程可以获取该锁，其他获取该锁的线程会被阻塞而被放入该锁的AQS阻塞队列，首先看看类图结构，如图6-4所示
 
-<img src="/Users/hzx/Library/Application Support/typora-user-images/6-4.png" alt="image-20191107132004400" style="zoom:50%;" />
+<img src="/image/6-4.png" alt="image-20191107132004400" style="zoom:50%;" />
 
 从类图可以看到，ReentrantLock最终还是使用AQS来实现的，并且根据参数来决定其内部是一个公平锁还是非公平锁，默认是非公平锁。
 
@@ -773,13 +773,13 @@ public class ReentrantLockList {
 
 同样最后使用图(见图 6-5) 来加深理解 。
 
-<img src="/Users/hzx/Library/Application Support/typora-user-images/6-5.png" alt="image-20191107164344744" style="zoom:50%;" />
+<img src="/image/6-5.png" alt="image-20191107164344744" style="zoom:50%;" />
 
 如图6-5所示，加入线程Thread1、Thread2和Thread3同时尝试获取独占锁ReentrantLock，假设Thread1获取到了，则Thread2和Thread3就会被转换为Node节点并被放入ReentrantLock对应的AQS阻塞队列，而后被阻塞挂起。
 
 如图6-6所示，假设Thread1获取锁后调用了对应的锁创建的条件变量1，那么Thread1就会释放获取到的锁，然后当前线程就会被转换为Node结点插入条件变量1的条件队列。由于Thread1释放了锁，所以阻塞到AQS队列里面的Thread2和Thread3就会有机会获取到该锁，加入使用的是公平策略，那么这时候Thread2就会获取到该锁，从而从AQS队列里面移除Thread2对应的Node节点
 
-<img src="/Users/hzx/Library/Application Support/typora-user-images/6-6.png" alt="image-20191107171349310" style="zoom:50%;" />
+<img src="/image/6-6.png" alt="image-20191107171349310" style="zoom:50%;" />
 
 <h3 id='14'>小结</h3>
 
