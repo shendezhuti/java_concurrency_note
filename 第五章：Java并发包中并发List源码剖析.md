@@ -16,7 +16,7 @@
 
 并发包中的并发List只有CopyOnwriteArrayList。CopyOnWriteArrayList是一个线程安全的ArrayList，对其进行修改操作都是在底层的的一个复制的数组上进行的，也就是使用了写时复制的策略。
 
-<img src="/Users/hzx/Library/Application Support/typora-user-images/image-20191105125024453.png" alt="image-20191105125024453" style="zoom: 50%;" />
+![](image/5-1.png)
 
 在CopyOnWriteArrayList的类图中，每个CopyOnWriteArrayList对象里面有一个array数组对象用来存放具体元素，ReentrantLock独占锁对象用来保证同时只有一个线程对array进行修改。这里只要记得ReentrantLock是独占锁，同时只有一个线程可以获取就可以了，后面会专门对JUC的锁进行介绍。
 
@@ -119,11 +119,11 @@ final Object[] getArray() {
 
 当线程X调用get方法获取指定位置的元素时需要两步：A：首先获取array数组，B：通过下标访问指定位置的元素。整个过程没有加锁同步，可能出现弱一致的问题。假设这时候List的内容如图5-2所示，里面有1、2、3三个元素
 
-<img src="/Users/hzx/Library/Application Support/typora-user-images/image-20191105150801391.png" alt="image-20191105150801391" style="zoom:50%;" />
+![](image/5-2.png)
 
 由于执行步骤A和步骤B没有加锁，这就可能导致在线程x执行完步骤A后执行步骤B前，另外一个线程y进行了remove操作，假设要删除元素1。remove操作首先或获取独占锁，然后进行写时复制操作，也就是复制一份当前array数组，然后在复制的数组里面删除线程x通过get方法要访问的元素1，然后让array指向复制的数组。而这时候array之前指向的数组的引用计数为1而不是0，因为线程x还在使用它，这时候线程x开始执行步骤B，步骤B操作的数组是线程y删除元素之前的数组，如图5-3所示
 
-<img src="/Users/hzx/Library/Application Support/typora-user-images/image-20191105152545512.png" alt="image-20191105152545512" style="zoom:50%;" />
+![](image/5-3.png)
 
 虽然线程y已经删除了index处的元素，但是线程x的步骤还是会返回index处的元素，这其实就是写时复制策略产生的弱一致性问题。
 
@@ -265,5 +265,5 @@ public class copylist {
 
 <h2 id='9'>总结</h2>
 
-CopyOnWriteArrayList使用写时复制的策略来保证 list的一致性，而获取一修改一写入三步操作并不是原子性的，所以在增删改的过程中都使用了独占锁，来保证在某个时间只有一个线程能对 list数组进行修改。 另外 CopyOnWriteAn·ayList提供了弱一致性的法代器 ， 从而保证在获取迭代器后，其他线程对 list 的修改是不可见的， 迭代器遍历的数组是一个快照 。 另外， CopyOnWriteArraySet 的底层就是使用它实现的，感兴趣的读者可以查阅相关源码 。
+CopyOnWriteArrayList使用写时复制的策略来保证 list的一致性，而获取一修改一写入三步操作并不是原子性的，所以在增删改的过程中都使用了独占锁，来保证在某个时间只有一个线程能对list数组进行修改。 另外 CopyOnWriteAn·ayList提供了弱一致性的迭代器，从而保证在获取迭代器后，其他线程对 list 的修改是不可见的，迭代器遍历的数组是一个快照。 另外，CopyOnWriteArraySet的底层就是使用它实现的，感兴趣的读者可以查阅相关源码 。
 
