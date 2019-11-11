@@ -92,8 +92,8 @@ public class ParkAndUnparkTest {
 
 <h3 id='4'>3.void parkNanos(long nanos)</h3>
 和 park方法类似，如果调用 park方法的线程已经拿到了与 LockSupport关联的许可证，
-则调用 LockSupport.parkNanos(long nanos)方法后会马上返回。该方法的不同在于 ，如果
-没有拿到许可 证，则调用线 程会被挂起 nanos 时间 后修改为自动返回。
+则调用 LockSupport.parkNanos(long nanos)方法后会马上返回。该方法的不同在于，如果
+没有拿到许可证，则调用线程会被挂起nanos时间后修改为自动返回。
 
 <h2 id='5'>抽象同步队列AQS概述</h2>
 
