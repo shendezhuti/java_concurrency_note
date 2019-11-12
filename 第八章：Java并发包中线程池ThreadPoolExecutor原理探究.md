@@ -120,7 +120,7 @@ public static ExecutorService newCachedThreadPool() {
 
 execute方法的作用是提交任务command到线程池进行执行。用户线程提交任务到线程池的模型图如图8-1所示
 
-![image-20191112145233578](/Users/hzx/Library/Application Support/typora-user-images/image-20191112145233578.png)
+![image-20191112145233578](/image/8-1.png)
 
 从该图可以看出，ThreadPoolExecutor的实现实际上是一个生产消费模型，当用户添加任务到线程池时相当于生产者生产元素，worker线程工作集中的线程直接执行任务或者从任务队列里面获取任务时则相当于消费者消费元素。
 
