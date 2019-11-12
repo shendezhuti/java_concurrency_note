@@ -44,6 +44,7 @@ PriorityBlockingQueue内部有一个数组queue，用来存放队列元素。all
 由于这是一个优先队列，所以有一个comparator用来比较元素大小。lock独占锁对象用来控制同时只能有一个线程可以进行入队、出队操作。 notEmpty 条件变量用来实现 take 方法阻塞模式。这里没有 notFull 条件变量是因为这里的 put 操作是非阻塞的，为啥要设计非阻塞的，是因为这是无解队列。（不太明白这句话）
 
 <h3 id='6'>构造函数</h3>
+
 ```java
 private static final int DEFAULT_INITIAL_CAPACITY = 11;
 
