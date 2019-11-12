@@ -418,7 +418,7 @@ public int size() {
   小结
 </h3>
 
-本节aj清洁了DelayQueue队列，其内部使用了PriorityQueue存放数据，使用ReentrantLock实现线程同步。另外队列里面的元素要实现Delayed接口，其中一个是获取当前元素到过期时间剩余时间的接口，在出队时判断元素是否过期了，一个是元素之间比较的接口，因为这是一个有优先级的队列。
+本节讲解了DelayQueue队列，其内部使用了PriorityQueue存放数据，使用ReentrantLock实现线程同步。另外队列里面的元素要实现Delayed接口，其中一个是获取当前元素到过期时间剩余时间的接口，在出队时判断元素是否过期了，一个是元素之间比较的接口，因为这是一个有优先级的队列。
 
 <img src="/image/7-2.png" style="zoom:50%;" />
 
