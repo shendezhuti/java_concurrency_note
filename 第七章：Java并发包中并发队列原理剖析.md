@@ -44,6 +44,7 @@ PriorityBlockingQueue内部有一个数组queue，用来存放队列元素。all
 由于这是一个优先队列，所以有一个comparator用来比较元素大小。lock独占锁对象用来控制同时只能有一个线程可以进行入队、出队操作。 notEmpty 条件变量用来实现 take 方法阻塞模式。这里没有 notFull 条件变量是因为这里的 put 操作是非阻塞的，为啥要设计非阻塞的，是因为这是无解队列。（不太明白这句话）
 
 <h3 id='6'>构造函数</h3>
+
 ```java
 private static final int DEFAULT_INITIAL_CAPACITY = 11;
 
@@ -275,7 +276,7 @@ PriorityBlockingQueue 队列 在内部使用二叉树堆维护元素优先级，
 PriorityBlockingQueue类似于 ArrayBlockingQueue，在内部使用一个独占锁来控制同时只有一个线程可以进行入队和出队操作。另外，前者只使用了一个notEmpty 条件变量而没有使用 notFull，这是因为前者是无界队列，执行 put操作时永远不会处于 await 状态，所以也不需要被唤醒。而 take 方法是阻塞方法，并且是可被中断的 。
 当需要存放有优先级的元素时该队列比较有用 
 
-<img src="/Users/hzx/Library/Application Support/typora-user-images/image-20191112010213945.png" alt="image-20191112010213945" style="zoom:50%;" />
+<img src="/image/7-1.png" alt="image-20191112010213945" style="zoom:50%;" />
 
 <h3 id='8'>DelayQueue</h3>
 
@@ -417,7 +418,7 @@ public int size() {
   小结
 </h3>
 
-本节aj清洁了DelayQueue队列，其内部使用了PriorityQueue存放数据，使用ReentrantLock实现线程同步。另外队列里面的元素要实现Delayed接口，其中一个是获取当前元素到过期时间剩余时间的接口，在出队时判断元素是否过期了，一个是元素之间比较的接口，因为这是一个有优先级的队列。
+本节讲解了DelayQueue队列，其内部使用了PriorityQueue存放数据，使用ReentrantLock实现线程同步。另外队列里面的元素要实现Delayed接口，其中一个是获取当前元素到过期时间剩余时间的接口，在出队时判断元素是否过期了，一个是元素之间比较的接口，因为这是一个有优先级的队列。
 
-<img src="/Users/hzx/Library/Application Support/typora-user-images/image-20191112115636039.png" alt="image-20191112115636039" style="zoom:50%;" />
+<img src="/image/7-2.png" style="zoom:50%;" />
 
