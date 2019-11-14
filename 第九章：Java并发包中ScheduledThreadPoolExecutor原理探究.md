@@ -305,6 +305,6 @@ public ScheduledFuture<?> scheduleAtFixedRate(Runnable command,
 
 <h2 id='7'>总结</h2>
 
-![image-20191113165955265](/Users/hzx/Library/Application Support/typora-user-images/image-20191113165955265.png)
+![image-20191113165955265](/image/9-1.png)
 
 ScheduledThreadPoolExecutor内部使用了DelayQueue来存放具体任务。任务分三种，其中一次性执行任务执行完毕就结束了，fixed-delay任务保证同一个任务在多次执行之间间隔固定时间，fix-rate任务保证按照固定的频率执行。任务类型使用period的值来区分
