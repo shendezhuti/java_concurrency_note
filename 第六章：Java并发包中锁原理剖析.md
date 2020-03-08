@@ -748,7 +748,7 @@ public class ReentrantLockList {
     }
 
     public void remove(String e){
-        lock.unlock();
+        lock.lock();
         try{
             array.remove(e);
         }finally {
