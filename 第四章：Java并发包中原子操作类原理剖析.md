@@ -53,21 +53,21 @@ public class AtomicLong extends Number implements java.io.Serializable{
 
 <h3 id='2'> 递增和递减操作代码</h3>
 ```java
-//(6)调用unsafe方法，原子性设置value值为原始值+1，返回值为递增后的值
+(6)调用unsafe方法，原子性设置value值为原始值+1，返回值为递增后的值
 public final long incrementAndGet(){
    return unsafe.getAndAddLong(this,valueOffset,1L)+1L;
 }
 
-//(7)调用unsafe方法，原子性设置value值为原始值-1，返回值为递减后的值
+(7)调用unsafe方法，原子性设置value值为原始值-1，返回值为递减后的值
 public final long decrementAndGet(){
    return unsafe.getAndAddLong(this,valueOffset,1L)-1L;
 }
 
-//(8)调用unsafe方法，原子性设置value值为原始值+1，返回值为原始值
+(8)调用unsafe方法，原子性设置value值为原始值+1，返回值为原始值
 public final long getAndIncrement(){
    return unsafe.getAndAddLong(this,valueOffset,1L);
 }
-//(9)调用unsafe方法，原子性设置value值为原始值-1，返回值为原始值
+(9)调用unsafe方法，原子性设置value值为原始值-1，返回值为原始值
 public final long getAndDecrement(){
    return unsafe.getAndAddLong(this,valueOffset,-1L);
 }
