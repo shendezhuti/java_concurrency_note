@@ -71,7 +71,6 @@ public final long getAndIncrement(){
 public final long getAndDecrement(){
    return unsafe.getAndAddLong(this,valueOffset,-1L);
 }
-
 ```
 
 在如上代码内部都是通过Unsafe的getAndAddLong方法来实现操作，这个函数是个原子性操作。
